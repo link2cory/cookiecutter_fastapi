@@ -1,0 +1,22 @@
+node {
+	checkout scm
+	def app
+
+        # only work with master branch for now
+	if (env.BRANCH_NAME == 'master') {
+
+		stage('Clone repository') {
+			checkout scm
+		}
+
+		stage('Build') {
+			app = docker.build()
+		}
+
+		stage('Test') {
+		}
+
+		stage('Push') {
+		}
+	}
+}

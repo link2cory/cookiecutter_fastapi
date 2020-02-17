@@ -1,0 +1,9 @@
+- job:
+    name: '{{ cookiecutter.project_name }}'
+    project-type: multibranch
+    script-path: 'jenkins/Jenkinsfile'
+    scm:
+        - github:
+            repo-owner: '{{ cookiecutter.github_username }}'
+            repo: '{{ cookiecutter.project_name }}'
+

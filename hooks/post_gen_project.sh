@@ -35,5 +35,10 @@ git remote add origin \
 	git@github.com:{{cookiecutter.github_username}}/{{cookiecutter.project_name}}.git
 git push -u origin master
 
+# create a jenkins job for this project
+jenkins-jobs --conf jenkins/jenkins_jobs.ini update jenkins/job_config.yaml
+
+
+
 # return the result of the last command
 exit $?
