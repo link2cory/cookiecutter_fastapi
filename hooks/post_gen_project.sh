@@ -17,10 +17,23 @@ pipenv lock -r > requirements.txt
 # run the initial tests
 #pytest
 
-# create a git repository
+# create a github respository
+curl -u {{cookiecutter.github_username}}:{{cookiecutter.github_password}} \
+	--data '@github_repo_config.json' \
+	https://api.github.com/user/repos
+
+# remove the github_repo_config file
+rm github_repo_config.json
+
+# create a local git repo
 git init
 git add -A
 git commit --message "initial commit"
+
+# push the local repo up to github
+git remote add origin \
+	git@github.com:{{cookiecutter.github_username}}/{{cookiecutter.project_name}}.git
+git push -u origin master
 
 # return the result of the last command
 exit $?
