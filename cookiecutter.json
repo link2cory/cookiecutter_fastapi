@@ -7,5 +7,6 @@
     "github_password": null,
     "jenkins_username": null,
     "jenkins_token": null,
-    "jenkins_url": "http://localhost:8080"
+    "jenkins_url": "http://localhost:8080",
+    "docker_hub_username": null
 }

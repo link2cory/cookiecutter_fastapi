@@ -1,8 +1,11 @@
+#!/usr/bin/env groovy
+
 node {
 	checkout scm
-	def app
+	def image
 
-        # only work with master branch for now
+	// only process the master branch for now
+	// TODO: i think this can be configured in the job config
 	if (env.BRANCH_NAME == 'master') {
 
 		stage('Clone repository') {
@@ -10,13 +13,23 @@ node {
 		}
 
 		stage('Build') {
-			app = docker.build()
+			environment {
+			    DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+			}
+			image = docker.build("{{ cookiecutter.docker_hub_username }}/{{ cookiecutter.project_name }}:${env.BUILD_ID}")
 		}
 
 		stage('Test') {
 		}
 
 		stage('Push') {
+			// only deploy successful builds
+			if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+				docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+					image.push("${env.BUILD_ID}")
+					image.push("latest")
+				}
+			}
 		}
 	}
 }
