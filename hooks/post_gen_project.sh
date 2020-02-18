@@ -38,6 +38,10 @@ git push -u origin master
 # create a jenkins job for this project
 jenkins-jobs --conf jenkins/jenkins_jobs.ini update jenkins/job_config.yaml
 
+# setup a github webhook to initial builds on push
+curl -u {{ cookiecutter.github_username }}:{{ cookiecutter.github_password }} \
+	--data '@github_hook_build_config.json' \
+	https://api.github.com/repos/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}/hooks
 
 
 # return the result of the last command

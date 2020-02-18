@@ -6,4 +6,4 @@
         - github:
             repo-owner: '{{ cookiecutter.github_username }}'
             repo: '{{ cookiecutter.project_name }}'
-
+            credentials-id: 'github-repo-scan'
