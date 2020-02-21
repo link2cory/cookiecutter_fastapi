@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "Bootstrapping..."
+
+source .env
+
+./scripts/install_deps
+./scripts/create_repo
+./scripts/create_jenkins_job
+./scripts/create_webhook
+
+# build the docker image(s)
+#{% if cookiecutter.docker_support == "yes" %}
+#docker build . -t {{cookiecutter.project_name}}
+#{% endif %}
+
+# run the initial tests
+#pytest
+
+
+
+
+
+
+# return the result of the last command
+exit $?

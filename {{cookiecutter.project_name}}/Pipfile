@@ -10,6 +10,7 @@ requests = "*"
 mypy = "*"
 black = "*"
 flake8 = "*"
+jenkins-job-builder="*"
 
 [packages]
 fastapi = "*"
