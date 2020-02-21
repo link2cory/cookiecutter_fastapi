@@ -1,0 +1,9 @@
+{
+    "name": "web",
+    "active": true,
+    "events": ["push"],
+    "config": {
+        "url": "{{ cookiecutter.jenkins_url }}/github-webhook/",
+        "content_type": "json"
+    }
+}
