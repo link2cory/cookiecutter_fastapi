@@ -1,23 +1,23 @@
 # base image
-FROM {{cookiecutter.docker_base_image}}
+FROM python:3.8.0-slim as builder
 
-# set working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN apt-get update \
+&& apt-get install gcc -y \
+&& apt-get clean
+
+COPY requirements.txt /app/requirements.txt
+WORKDIR app
+RUN pip install --user -r requirements.txt
+COPY . /app
+
+FROM python:3.8.0-slim as app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PATH=/root/.local/bin:$PATH
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt /usr/src/app/requirements.txt
-RUN pip install -r requirements.txt
-
-# add app
-COPY . /usr/src/app
-
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
-CMD ["uvicorn", "--bind", ":5000", "main:app"]
-
-
+COPY --from=builder /root/.local /root/.local
+COPY --from=builder /app/ /app/
+WORKDIR app
+ENTRYPOINT ["/app/entrypoint.sh"]
